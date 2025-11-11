@@ -81,7 +81,6 @@ class UserAdapter(private val userList: ArrayList<User>) :
                             .addOnSuccessListener {
                                 Toast.makeText(context, "✅ Data berhasil diperbarui", Toast.LENGTH_SHORT).show()
 
-                                // Perbarui tampilan di RecyclerView tanpa reload Firebase
                                 userList[position] = updatedUser
                                 notifyItemChanged(position)
                             }
@@ -95,7 +94,7 @@ class UserAdapter(private val userList: ArrayList<User>) :
                 .show()
         }
 
-        //  Klik = hapus data
+        //  Hapus data
         holder.binding.btnDelete.setOnClickListener {
             val context = holder.itemView.context
             val alert = AlertDialog.Builder(context)
@@ -106,7 +105,7 @@ class UserAdapter(private val userList: ArrayList<User>) :
                         database.child(it).removeValue()
                             .addOnSuccessListener {
                                 Toast.makeText(context, "Data berhasil dihapus", Toast.LENGTH_SHORT).show()
-                                // Hapus dari list dan update tampilan RecyclerView
+
                                 userList.removeAt(position)
                                 notifyItemRemoved(position)
                             }

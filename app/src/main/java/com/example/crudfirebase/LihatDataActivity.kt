@@ -11,7 +11,6 @@ class LihatDataActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLihatDataBinding
     private val database = FirebaseDatabase
-        // 🔹 Pastikan URL sesuai region project
         .getInstance("https://crudfirebase-3a19d-default-rtdb.asia-southeast1.firebasedatabase.app/")
         .getReference("users")
 
