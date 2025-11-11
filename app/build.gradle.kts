@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services") // 🔥 wajib di sini, bukan di bawah
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -36,7 +36,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true // ✅ Wajib untuk ActivityMainBinding, ItemUserBinding, dst.
+        viewBinding = true // Wajib untuk ActivityMainBinding, ItemUserBinding
     }
 }
 
@@ -47,7 +47,7 @@ dependencies {
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    // 🔥 Firebase (Realtime Database, Auth, dan Analytics)
+    // Firebase (Realtime Database, Auth, dan Analytics)
     implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-auth")

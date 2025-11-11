@@ -11,7 +11,7 @@ class LihatDataActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLihatDataBinding
     private val database = FirebaseDatabase
-        // 🔹 Pastikan URL sesuai region project kamu
+        // 🔹 Pastikan URL sesuai region project
         .getInstance("https://crudfirebase-3a19d-default-rtdb.asia-southeast1.firebasedatabase.app/")
         .getReference("users")
 
@@ -23,7 +23,7 @@ class LihatDataActivity : AppCompatActivity() {
         binding = ActivityLihatDataBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 🔹 Siapkan RecyclerView
+        // 🔹 RecyclerView
         adapter = UserAdapter(userList)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
@@ -37,7 +37,6 @@ class LihatDataActivity : AppCompatActivity() {
                     val user = data.getValue(User::class.java)
 
                     if (user != null) {
-                        // ⚠️ Pastikan setiap user punya ID untuk update/delete
                         user.id = data.key
                         userList.add(user)
                     }
