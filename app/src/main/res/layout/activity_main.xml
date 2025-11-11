@@ -1,26 +1,101 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#FFFFFF"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/etName"
-        android:hint="Nama"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etAge"
-        android:hint="Umur"
-        android:inputType="number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <!-- Input NIM -->
+        <EditText
+            android:id="@+id/etNim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="NIM"
+            android:inputType="number"
+            android:layout_marginBottom="8dp" />
 
-    <Button
-        android:id="@+id/btnSave"
-        android:text="Simpan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        <!-- Input Nama -->
+        <EditText
+            android:id="@+id/etNama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukan Nama"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Input Jurusan -->
+        <EditText
+            android:id="@+id/etJurusan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jurusan"
+            android:inputType="text"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Input Jenis Kelamin -->
+        <EditText
+            android:id="@+id/etJenisKelamin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jenis Kelamin"
+            android:inputType="text"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Input Alamat -->
+        <EditText
+            android:id="@+id/etAlamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Alamat"
+            android:inputType="textPostalAddress"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Tombol Simpan dan Lihat Data -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="8dp">
+
+            <Button
+                android:id="@+id/btnSimpan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SIMPAN"
+                android:backgroundTint="#E0E0E0"
+                android:textStyle="bold"
+                android:textColor="#000" />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnLihat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="LIHAT DATA"
+                android:backgroundTint="#E0E0E0"
+                android:textStyle="bold"
+                android:textColor="#000" />
+        </LinearLayout>
+
+        <!-- Tombol Logout -->
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOGOUT"
+            android:backgroundTint="#E0E0E0"
+            android:textStyle="bold"
+            android:textColor="#000" />
+    </LinearLayout>
+</ScrollView>

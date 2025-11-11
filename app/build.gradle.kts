@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services") // 🔥 tambahkan di sini, bukan buat blok baru
+    id("com.google.gms.google-services") // 🔥 wajib di sini, bukan di bawah
 }
 
 android {
@@ -36,18 +36,24 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        viewBinding = true // ✅ Wajib untuk ActivityMainBinding, ItemUserBinding, dst.
     }
 }
 
 dependencies {
+    // Android basic libs
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    // 🔥 Firebase dependencies
-    implementation("com.google.firebase:firebase-database:20.3.0")
-    implementation("com.google.firebase:firebase-auth:22.3.0")
-    implementation("com.google.firebase:firebase-analytics:21.5.0")
+    // 🔥 Firebase (Realtime Database, Auth, dan Analytics)
+    implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
+    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-analytics")
+
+    // Optional: RecyclerView + CardView
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.cardview:cardview:1.0.0")
 }

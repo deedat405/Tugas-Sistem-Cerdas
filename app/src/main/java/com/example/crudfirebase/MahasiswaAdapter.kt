@@ -9,72 +9,96 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.crudfirebase.databinding.ItemUserBinding
 import com.google.firebase.database.FirebaseDatabase
 
-class UserAdapter(private val userList: ArrayList<User>) :
-    RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+class MahasiswaAdapter(private val list: ArrayList<User>) :
+    RecyclerView.Adapter<MahasiswaAdapter.ViewHolder>() {
 
     private val database = FirebaseDatabase.getInstance().getReference("users")
 
-    inner class UserViewHolder(val binding: ItemUserBinding) :
+    inner class ViewHolder(val binding: ItemUserBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val binding = ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return UserViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemUserBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = userList.size
+    override fun getItemCount(): Int = list.size
 
-    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val user = userList[position]
-        holder.binding.tvName.text = user.nama
-        holder.binding.tvAge.text = "Umur: ${user.umur}"
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val user = list[position]
 
-        // 🔹 Tombol Hapus
-        holder.binding.btnDelete.setOnClickListener {
-            user.id?.let {
-                database.child(it).removeValue()
-                    .addOnSuccessListener {
-                        Toast.makeText(holder.itemView.context, "Data dihapus", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(holder.itemView.context, "Gagal hapus data", Toast.LENGTH_SHORT).show()
-                    }
-            }
-        }
+        // 🔹 Tampilkan data dari User.kt
+        holder.binding.tvNim.text = "NIM: ${user.nim}"
+        holder.binding.tvNama.text = "Nama: ${user.nama}"
+        holder.binding.tvJurusan.text = "Jurusan: ${user.jurusan}"
 
-        // 🔹 Tombol Edit
-        holder.binding.btnEdit.setOnClickListener {
+        // 🔹 Tombol Update (tombol ini harus ada di item_user.xml)
+        holder.binding.btnUpdate.setOnClickListener {
             val context = holder.itemView.context
             val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_user, null)
-            val etName = dialogView.findViewById<EditText>(R.id.etEditName)
-            val etAge = dialogView.findViewById<EditText>(R.id.etEditAge)
 
-            etName.setText(user.nama)
-            etAge.setText(user.umur)
+            val etNim = dialogView.findViewById<EditText>(R.id.etEditNim)
+            val etNama = dialogView.findViewById<EditText>(R.id.etEditNama)
+            val etJurusan = dialogView.findViewById<EditText>(R.id.etEditJurusan)
+            val etJenis = dialogView.findViewById<EditText>(R.id.etEditJenisKelamin)
+            val etAlamat = dialogView.findViewById<EditText>(R.id.etEditAlamat)
+
+            etNim.setText(user.nim)
+            etNama.setText(user.nama)
+            etJurusan.setText(user.jurusan)
+            etJenis.setText(user.jenisKelamin)
+            etAlamat.setText(user.alamat)
 
             AlertDialog.Builder(context)
-                .setTitle("Edit Data")
+                .setTitle("Update Data Mahasiswa")
                 .setView(dialogView)
-                .setPositiveButton("Simpan") { dialog, _ ->
-                    val newName = etName.text.toString()
-                    val newAge = etAge.text.toString()
-
-                    if (newName.isNotEmpty() && newAge.isNotEmpty()) {
-                        val updatedUser = User(user.id, newName, newAge)
-                        user.id?.let {
-                            database.child(it).setValue(updatedUser)
-                                .addOnSuccessListener {
-                                    Toast.makeText(context, "Data diperbarui", Toast.LENGTH_SHORT).show()
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(context, "Gagal memperbarui data", Toast.LENGTH_SHORT).show()
-                                }
-                        }
+                .setPositiveButton("Update") { dialog, _ ->
+                    val updatedUser = User(
+                        user.id,
+                        etNim.text.toString(),
+                        etNama.text.toString(),
+                        etJurusan.text.toString(),
+                        etJenis.text.toString(),
+                        etAlamat.text.toString()
+                    )
+                    user.id?.let {
+                        database.child(it).setValue(updatedUser)
+                            .addOnSuccessListener {
+                                Toast.makeText(context, "Data berhasil diperbarui", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(context, "Gagal memperbarui data", Toast.LENGTH_SHORT).show()
+                            }
                     }
                     dialog.dismiss()
                 }
                 .setNegativeButton("Batal") { dialog, _ -> dialog.dismiss() }
                 .show()
+        }
+
+        // 🔻 Klik lama untuk hapus data
+        holder.itemView.setOnLongClickListener {
+            val context = holder.itemView.context
+            AlertDialog.Builder(context)
+                .setTitle("Hapus Data")
+                .setMessage("Yakin ingin menghapus data ini?")
+                .setPositiveButton("Ya") { dialog, _ ->
+                    user.id?.let {
+                        database.child(it).removeValue()
+                            .addOnSuccessListener {
+                                Toast.makeText(context, "Data dihapus", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(context, "Gagal menghapus data", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Tidak") { dialog, _ -> dialog.dismiss() }
+                .show()
+            true
         }
     }
 }
